@@ -1,6 +1,6 @@
 // at the top of your file
 const { Client, Events, GatewayIntentBits, EmbedBuilder } = require('discord.js');
-const { token, channel_id } = require('../config.json');
+const { token, channel_id } = require('../../config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 

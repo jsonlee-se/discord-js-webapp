@@ -1,12 +1,12 @@
-const embed_id = "1148923597528772638"
+const embed_id = "1149389626977562744"
 
 const { Client, Events, GatewayIntentBits, EmbedBuilder } = require('discord.js');
-const { token, channel_id } = require('../config.json');
+const { token, channel_id } = require('../../config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-const exampleEmbed = new EmbedBuilder()
-    .setTitle('Edited title');
+// const exampleEmbed = new EmbedBuilder()
+//     .setTitle('Edited title');
 
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
@@ -16,8 +16,9 @@ client.once(Events.ClientReady, c => {
 
     //get the message by id
     const message = channel.messages.fetch(embed_id)
-        .then(message => message.edit({ embeds: [exampleEmbed] }));
-
+        // .then(message => message.edit({ embeds: [exampleEmbed] }));
+        .then(message => console.log(message.embeds[0].title + "\n" +
+        message.embeds[0].description));
     
 });
 
