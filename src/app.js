@@ -3,10 +3,11 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-const { sendMessage } = require('./discordBot');
+const { sendMessage, sendEmbed, editEmbed } = require('./discordBot');
 const embed_id = "1149389626977562744"
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/', (req, res) => {
     // Render the HTML form here
@@ -18,7 +19,16 @@ app.post('/send-data', (req, res) => {
     console.log(message);
 
     sendMessage(message);
-    // Redirect the user back to the form page or another page as needed.
+    res.redirect('/');
+});
+
+app.post('/send-embed', (req, res) => {
+    const { title, url, description, thumbnail, image, color, footer } = req.body;
+    console.log(title, url, description, thumbnail, image, color, footer);
+    // log the types of each variable
+    console.log(typeof title, typeof url, typeof description, typeof thumbnail, typeof image, typeof color, typeof footer);
+    const fields = null;
+    sendEmbed(title, url, description, thumbnail, fields, image, color, footer);
     res.redirect('/');
 });
 
