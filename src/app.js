@@ -25,8 +25,8 @@ app.post('/send-data', (req, res) => {
 app.post('/send-embed', (req, res) => {
     const { title, url, description, thumbnail, image, color, footer } = req.body;
     console.log(title, url, description, thumbnail, image, color, footer);
-    // log the types of each variable
-    console.log(typeof title, typeof url, typeof description, typeof thumbnail, typeof image, typeof color, typeof footer);
+
+    // TODO: implement fields correctly
     const fields = null;
     sendEmbed(title, url, description, thumbnail, fields, image, color, footer);
     res.redirect('/');
