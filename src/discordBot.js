@@ -10,32 +10,58 @@ client.once(Events.ClientReady, c => {
 
 client.login(token);
 
-function sendMessage(message) {
+function sendMessage(message, title, url, description, thumbnail, fields, image, color, footer) {
     const channel = client.channels.cache.get(channel_id);
     console.log(`Channel: ${channel.name}`);
 
-    channel.send(message);
-}
+    console.log(title, url, description, thumbnail, image, color, footer);
 
-function sendEmbed(title, url, description, thumbnail, fields, image, color, footer) {
-    const channel = client.channels.cache.get(channel_id);
-    console.log(`Channel: ${channel.name}`);
+    if (message !== '') {
+        channel.send(message);
+    }
 
-    const exampleEmbed = new EmbedBuilder()
-    .setColor(convertColor(color))
-    .setTitle(title)
-    .setURL(url)
-    .setDescription(description)
-    .setThumbnail(thumbnail)
-    .setImage(image)
-    .setTimestamp()
-    .setFooter({ text: footer, iconURL: thumbnail });
-
-    channel.send({ embeds: [exampleEmbed] });
+    if (title !== '') {
+        const embed = createEmbed(title, url, description, thumbnail, fields, image, color, footer);
+        channel.send({ embeds: [embed] });
+    }
 }
 
 function convertColor(color) {
     return Number("0x" + color.substring(1));
+}
+
+function createEmbed(title, url, description, thumbnail, fields, image, color, footer) {
+    const exampleEmbed = new EmbedBuilder()
+        exampleEmbed.setTitle(title);
+
+        if (color !== '') {
+            exampleEmbed.setColor(convertColor(color));
+        }
+
+        if (url !== '') {
+            console.log(url);
+            console.log("how am i here");
+            exampleEmbed.setURL(url);
+        }
+    
+        if (description !== '') {
+            exampleEmbed.setDescription(description);
+        }
+    
+        if (thumbnail !== '') {
+            exampleEmbed.setThumbnail(thumbnail);
+        }
+    
+        if (image !== '') {
+            exampleEmbed.setImage(image);
+        }
+    
+        exampleEmbed.setTimestamp();
+    
+        if (footer !== '') {
+            exampleEmbed.setFooter({ text: footer, iconURL: thumbnail });
+        }
+    return exampleEmbed;
 }
 
 // TODO: implement correctly
@@ -66,4 +92,4 @@ async function getChannelMessages(channel_id) {
     }
 }
 
-module.exports = { sendMessage, sendEmbed, editEmbed, getChannelMessages };
+module.exports = { sendMessage, editEmbed, getChannelMessages };

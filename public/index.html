@@ -8,19 +8,16 @@
 <body class="bg-dark-4">
     <div class="container">
         <div class="inline-div">
-            <form action="/send-data" method="POST" id="sendMessage">
-                <label for="message">Message:</label>
-                <input type="text" id="message" name="message" required>
-                <br/>
-        
-                <button type="submit">Send Message to Discord</button>
-            </form>
-        </div>
-        <div class="inline-div">
-            <form action="/send-embed" method="POST" id="sendEmbed">
+            <form action="/send-message" method="POST" id="sendMessage">
+                <label class="font-bold" for="content">Content</label>
+                    <textarea class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" id="content" name="content" rows="4" cols="50"></textarea>
+                    <br/>
+                    <br/>
+
+                <p class="font-bold">Embed</p>
                 <div class="bg-dark-3 border-1-4 rounded-md" style="position: relative; padding: 0.75rem" id="embedDiv">
                     <label class="font-bold" for="title">Title</label>
-                    <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="title" name="title" required>
+                    <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="title" name="title">
                     <br/>
                     <br/>
             
