@@ -5,7 +5,7 @@
     <script src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="bg-dark-4">
     <div class="container">
         <div class="inline-div">
             <form action="/send-data" method="POST" id="sendMessage">
@@ -18,51 +18,55 @@
         </div>
         <div class="inline-div">
             <form action="/send-embed" method="POST" id="sendEmbed">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required>
-                <br/>
-        
-                <label for="url">Title URL:</label>
-                <input type="text" id="url" name="url">
-                <br/>
-        
-                <label for="thumbnail">Thumbnail URL:</label>
-                <input type="text" id="thumbnail" name="thumbnail">
-                <br/>
-        
-                <label for="description">Description:</label>
-                <input type="text" id="description" name="description" required>
-                <br/>
-        
-                <div id="fields-container"></div>
-                <button id="add-field">Add Field</button>
-                <br/>
-        
-                <label for="image">Image URL:</label>
-                <input type="text" id="image" name="image">
-                <br/>
-        
-                <label for="color">Color:</label>
-                <input type="color" id="color" name="color">
-                <br/>
-        
-                <label for="footer">Footer:</label>
-                <input type="text" id="footer" name="footer">
-                <br/>
-        
+                <div class="bg-dark-3 border-1-4 rounded-md" style="position: relative; padding: 0.75rem">
+                    <label class="font-bold" for="title">Title</label>
+                    <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="title" name="title" required>
+                    <br/>
+                    <br/>
+            
+                    <label class="font-bold" for="url">Title URL:</label>
+                    <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="url" name="url">
+                    <br/>
+                    <br/>
+            
+                    <label class="font-bold" for="thumbnail">Thumbnail URL:</label>
+                    <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="thumbnail" name="thumbnail">
+                    <br/>
+                    <br>
+            
+                    <label class="font-bold" for="description">Description:</label>
+                    <textarea class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" id="description" name="description" rows="4" cols="50"></textarea>
+                    <br/>
+                    <br/>
+            
+                    <label class="font-bold" for="image">Image URL:</label>
+                    <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="image" name="image">
+                    <br/>
+                    <br/>
+            
+                    <label class="font-bold"for="color">Color:</label>
+                    <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="color" id="color" name="color">
+                    <br/>
+                    <br/>
+            
+                    <label class="font-bold"for="footer">Footer:</label>
+                    <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white"type="text" id="footer" name="footer">
+                    <br/>
+                    <br/>
+
+                    <div id="fields-container"></div>
+                    <button class="discord-button" id="add-field">Add Field</button>
+                    <br/>
+                </div>
+                
                 <button type="submit">Send Embed to Discord</button>
             </form>
         </div>
         <div class="inline-div">
             <button id="fetch-data">Fetch embeds</button>
-            <div id="messages-container">
-                
-            </div>
+            <div id="messages-container"></div>
         </div>
     </div>
     
-    
-
-
 </body>
 </html>

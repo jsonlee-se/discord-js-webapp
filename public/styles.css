@@ -1,9 +1,118 @@
 .container {
     display: flex; /* Use flexbox to make the divs inline */
 }
-
 .inline-div {
     flex: 1; /* Distribute available space equally among the divs */
     border: 1px solid #000; /* Add borders for visual separation (optional) */
     padding: 10px; /* Add padding for spacing (optional) */
+}
+
+body {
+    color : #D1D5D8;
+    font-family: 'GG', sans-serif;
+}
+
+input:focus {
+    outline: none;
+}
+
+/* FONT weight */
+.font-bold {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Background */
+.bg-dark-2 {
+    background-color: #202225;
+}
+.bg-dark-3 {
+    background-color: #2F3136;
+}
+.bg-dark-4 {
+    background-color: #37393F;
+}
+
+/* Borders */
+.border-l-4 {
+    border-left-width: 4px;
+}
+.border-transparent {
+    border-color: transparent;
+}
+.rounded-md {
+    border-radius: 0.375rem;
+}
+
+/* Sizing */
+.w-full {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Padding */
+.py-1 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+.py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+.px-1 {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+.px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+/* Text */
+.text-white {
+    color: #fff;
+}
+
+/* Margin */
+.mt-1 {
+    margin-top: 0.25rem;
+}
+.mt-2 {
+    margin-top: 0.5rem;
+}
+.mt-3 {
+    margin-top: 0.75rem;
+}
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.discord-button { 
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 16px;
+    height: 38px;
+    min-width: 96px;
+    min-height: 38px;
+    border: none;
+    color: #fff;
+    background-color: rgb(88, 101, 242);
+    transition: background-color .17s ease,color .17s ease;
+    :hover {
+        background-color: rgb(71, 82, 196);
+    }
+
 }
