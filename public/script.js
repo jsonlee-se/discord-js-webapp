@@ -3,6 +3,7 @@ let fieldCounter = 1;
 document.addEventListener('DOMContentLoaded', () => {
     const fieldsContainer = document.getElementById('fields-container');
     const addFieldButton = document.getElementById('add-field');
+    const fetchButton = document.getElementById('fetch-data');
     
     addFieldButton.addEventListener('click', () => {
         const newField = createField();
@@ -14,6 +15,19 @@ document.addEventListener('DOMContentLoaded', () => {
             // Remove the clicked field
             event.target.parentElement.remove();
         }
+    });
+
+    fetchButton.addEventListener('click', () => {
+        // When the button is clicked, fetch JSON data
+        fetch('/get-channel-messages')
+            .then(response => response.json())
+            .then(data => {
+                // Handle the JSON data here (e.g., update the page content)
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error fetching JSON data:', error);
+            });
     });
 });
 
@@ -43,3 +57,4 @@ function createField() {
     fieldCounter++; 
     return field;
 }
+

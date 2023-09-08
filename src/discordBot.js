@@ -50,4 +50,21 @@ function editEmbed(message_id) {
         message.embeds[0].description));
 }
 
-module.exports = { sendMessage, sendEmbed, editEmbed };
+async function getChannelMessages(channel_id) {
+    const channel = client.channels.cache.get(channel_id);
+    console.log(`Getting messages from: ${channel.name}`);
+
+    try {
+        const messages = await channel.messages.fetch();
+        const messages_array = [];
+        messages.forEach(message => {
+            messages_array.push(message);
+        });
+        return messages_array;
+    } catch (error) {
+        console.error('Error fetching messages:', error);
+        return []; // Return an empty array in case of an error
+    }
+}
+
+module.exports = { sendMessage, sendEmbed, editEmbed, getChannelMessages };
