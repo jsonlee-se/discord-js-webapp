@@ -18,7 +18,7 @@
         </div>
         <div class="inline-div">
             <form action="/send-embed" method="POST" id="sendEmbed">
-                <div class="bg-dark-3 border-1-4 rounded-md" style="position: relative; padding: 0.75rem">
+                <div class="bg-dark-3 border-1-4 rounded-md" style="position: relative; padding: 0.75rem" id="embedDiv">
                     <label class="font-bold" for="title">Title</label>
                     <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="title" name="title" required>
                     <br/>
@@ -45,7 +45,7 @@
                     <br/>
             
                     <label class="font-bold"for="color">Color:</label>
-                    <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="color" id="color" name="color">
+                    <input class="rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="color" id="color" name="color">
                     <br/>
                     <br/>
             
@@ -59,7 +59,7 @@
                     <br/>
                 </div>
                 
-                <button type="submit">Send Embed to Discord</button>
+                <button class="discord-button mt-4" type="submit">Send</button>
             </form>
         </div>
         <div class="inline-div">
@@ -67,6 +67,6 @@
             <div id="messages-container"></div>
         </div>
     </div>
-    
+
 </body>
 </html>

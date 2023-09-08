@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const addFieldButton = document.getElementById('add-field');
     const fetchButton = document.getElementById('fetch-data');
     const messagesContainer = document.getElementById('messages-container');
+
+    const colorInput = document.getElementById('color');
+    const embedDiv = document.getElementById('embedDiv');
+    const initialColor = colorInput.value;
     
     addFieldButton.addEventListener('click', () => {
         const newField = createField();
@@ -41,6 +45,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     messagesContainer.appendChild(embed);
                 });
             });
+    });
+
+    colorInput.style.backgroundColor = initialColor;
+    embedDiv.style.borderLeftColor = initialColor;
+    embedDiv.style.borderLeftStyle = 'solid';
+    embedDiv.style.borderLeftWidth = '5px';
+
+    colorInput.addEventListener('input', function() {
+        const selectedColor = colorInput.value;
+        colorInput.style.backgroundColor = selectedColor;
+        embedDiv.style.borderLeftColor = selectedColor;
+        embedDiv.style.borderLeftStyle = 'solid';
+        embedDiv.style.borderLeftWidth = '5px';
     });
 });
 
