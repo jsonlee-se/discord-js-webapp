@@ -52,7 +52,6 @@ function editEmbed(message_id) {
 
 async function getChannelMessages(channel_id) {
     const channel = client.channels.cache.get(channel_id);
-    console.log(`Getting messages from: ${channel.name}`);
 
     try {
         const messages = await channel.messages.fetch();

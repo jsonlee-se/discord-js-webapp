@@ -1,0 +1,9 @@
+.container {
+    display: flex; /* Use flexbox to make the divs inline */
+}
+
+.inline-div {
+    flex: 1; /* Distribute available space equally among the divs */
+    border: 1px solid #000; /* Add borders for visual separation (optional) */
+    padding: 10px; /* Add padding for spacing (optional) */
+}
