@@ -22,7 +22,7 @@ function sendEmbed(title, url, description, thumbnail, fields, image, color, foo
     console.log(`Channel: ${channel.name}`);
 
     const exampleEmbed = new EmbedBuilder()
-    .setColor(Number(convertColor(color)))
+    .setColor(convertColor(color))
     .setTitle(title)
     .setURL(url)
     .setDescription(description)
@@ -35,7 +35,7 @@ function sendEmbed(title, url, description, thumbnail, fields, image, color, foo
 }
 
 function convertColor(color) {
-    return "0x" + color.substring(1);
+    return Number("0x" + color.substring(1));
 }
 
 // TODO: implement correctly
