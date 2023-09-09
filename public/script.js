@@ -17,8 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     fieldsContainer.addEventListener('click', (event) => {
-        if (event.target && event.target.className === 'remove-field') {
-            event.target.parentElement.remove();
+        if (event.target && event.target.className === 'remove-field discord-button mt-1 mx-2') {
+            event.target.parentElement.parentElement.remove();
+            fieldCounter--;
         }
     });
 
@@ -64,25 +65,35 @@ document.addEventListener('DOMContentLoaded', () => {
 function createField() {
     const field = document.createElement('div');
     
+    
     // Label
     const label = document.createElement('label');
     label.setAttribute('for', `field_${fieldCounter}`);
-    label.textContent = `Field ${fieldCounter}: `;
+    label.textContent = `Field ${fieldCounter} `;
+    label.className = 'font-bold w-full';
     
+    const fieldBody = document.createElement('div');
+    fieldBody.className = 'container';
+
     // Input
     const input = document.createElement('input');
     input.setAttribute('type', 'text');
     input.setAttribute('id', `field_${fieldCounter}`);
     input.setAttribute('name', `field_${fieldCounter}`);
+    input.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
     
     // Remove button
     const removeButton = document.createElement('button');
-    removeButton.className = 'remove-field';
+    removeButton.className = 'remove-field discord-button mt-1 mx-2';
     removeButton.textContent = 'Remove';
+    removeButton.type = 'button';
     
+    fieldBody.appendChild(input);
+    fieldBody.appendChild(removeButton);
+
     field.appendChild(label);
-    field.appendChild(input);
-    field.appendChild(removeButton);
+    field.appendChild(fieldBody);
+    field.appendChild(document.createElement('br'));
     
     fieldCounter++; 
     return field;

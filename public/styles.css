@@ -3,8 +3,6 @@
 }
 .inline-div {
     flex: 1; /* Distribute available space equally among the divs */
-    border: 1px solid #000; /* Add borders for visual separation (optional) */
-    padding: 10px; /* Add padding for spacing (optional) */
 }
 
 body {
@@ -67,6 +65,18 @@ input[type="color"]::-moz-color-swatch {
     width: 100%;
     box-sizing: border-box;
 }
+.w-75 {
+    width: 75%;
+    box-sizing: border-box;
+}
+.w-50 {
+    width: 50%;
+    box-sizing: border-box;
+}
+.w-25 {
+    width: 25%;
+    box-sizing: border-box;
+}
 
 /* Padding */
 .py-1 {
@@ -93,6 +103,9 @@ input[type="color"]::-moz-color-swatch {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
 }
+.pl-2 {
+    padding-left: 0.5rem;
+}
 
 /* Text */
 .text-white {
@@ -111,6 +124,14 @@ input[type="color"]::-moz-color-swatch {
 }
 .mt-4 {
     margin-top: 1rem;
+}
+.mx-1 {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+}
+.mx-2 {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .discord-button { 
