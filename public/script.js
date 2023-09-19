@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     fieldsContainer.addEventListener('click', (event) => {
-        if (event.target && event.target.className === 'remove-field discord-button mt-1 mx-2') {
+        if (event.target && event.target.className === 'remove-field red-discord-button mt-1 ml-2') {
             event.target.parentElement.parentElement.remove();
             fieldCounter--;
         }
@@ -65,34 +65,73 @@ document.addEventListener('DOMContentLoaded', () => {
 function createField() {
     const field = document.createElement('div');
     
-    
     // Label
     const label = document.createElement('label');
     label.setAttribute('for', `field_${fieldCounter}`);
     label.textContent = `Field ${fieldCounter} `;
     label.className = 'font-bold w-full';
     
-    const fieldBody = document.createElement('div');
-    fieldBody.className = 'container';
+    const fieldContainer = document.createElement('div');
+    fieldContainer.className = 'container';
 
-    // Input
-    const input = document.createElement('input');
-    input.setAttribute('type', 'text');
-    input.setAttribute('id', `field_${fieldCounter}`);
-    input.setAttribute('name', `field_${fieldCounter}`);
-    input.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
+    // Title
+    const titleInput = document.createElement('input');
+    titleInput.setAttribute('type', 'text');
+    titleInput.setAttribute('id', `field_${fieldCounter}_title`);
+    titleInput.setAttribute('name', `field_${fieldCounter}_title`);
+    titleInput.setAttribute('placeholder', 'Title');
+    titleInput.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
+
+    // Description
+    const description = document.createElement('input');
+    description.setAttribute('type', 'text');
+    description.setAttribute('id', `field_${fieldCounter}`);
+    description.setAttribute('name', `field_${fieldCounter}`);
+    description.setAttribute('placeholder', 'Description');
+    description.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
     
+    // Inline Checkbox
+    // <div class="checkbox-wrapper-10">
+    //   <input class="tgl tgl-flip" id="cb5" type="checkbox" checked />
+    //   <label class="tgl-btn" data-tg-off="Nope" data-tg-on="Yeah!" for="cb5"></label>
+    // </div>
+
+    const inlineButtonDiv = document.createElement('div');
+    inlineButtonDiv.className = 'checkbox-wrapper-10 mt-1 ml-2';
+
+    const inlineButton = document.createElement('input');
+    inlineButton.className = 'tgl tgl-flip';
+    inlineButton.setAttribute('id', `field_${fieldCounter}_inline`);
+    inlineButton.setAttribute('type', 'checkbox');
+    inlineButton.checked = true;
+
+    const inlineButtonLabel = document.createElement('label');
+    inlineButtonLabel.className = 'tgl-btn';
+    inlineButtonLabel.setAttribute('data-tg-off', '!Inline');
+    inlineButtonLabel.setAttribute('data-tg-on', 'Inline');
+    inlineButtonLabel.setAttribute('for', `field_${fieldCounter}_inline`);
+
+    inlineButtonDiv.appendChild(inlineButton);
+    inlineButtonDiv.appendChild(inlineButtonLabel);
+
     // Remove button
     const removeButton = document.createElement('button');
-    removeButton.className = 'remove-field discord-button mt-1 mx-2';
+    removeButton.className = 'remove-field red-discord-button mt-1 ml-2';
     removeButton.textContent = 'Remove';
     removeButton.type = 'button';
     
-    fieldBody.appendChild(input);
-    fieldBody.appendChild(removeButton);
+
 
     field.appendChild(label);
-    field.appendChild(fieldBody);
+    field.appendChild(document.createElement('br'));
+
+    fieldContainer.appendChild(titleInput);
+    fieldContainer.appendChild(inlineButtonDiv);
+    fieldContainer.appendChild(removeButton);
+    field.appendChild(fieldContainer);
+
+    field.appendChild(description);
+    field.appendChild(document.createElement('br'));
     field.appendChild(document.createElement('br'));
     
     fieldCounter++; 
@@ -169,6 +208,7 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     colorInput.setAttribute('id', 'color');
     colorInput.setAttribute('name', 'color');
     colorInput.setAttribute('value', colorString);
+    
     
     // Footer
     const footerLabel = document.createElement('label');

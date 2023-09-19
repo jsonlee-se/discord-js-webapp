@@ -61,6 +61,13 @@ function createEmbed(title, url, description, thumbnail, fields, image, color, f
         if (footer !== '') {
             exampleEmbed.setFooter({ text: footer, iconURL: thumbnail });
         }
+
+        if (length(fields) > 0) {
+            fields.forEach(field => {
+                exampleEmbed.addFields(field.name, field.value, field.inline);
+            });
+        }
+        
     return exampleEmbed;
 }
 
