@@ -16,13 +16,15 @@ function sendMessage(message, title, url, description, thumbnail, image, color, 
 
     if (message !== '') {
         channel.send(message);
+        console.log(`Message sent: ${message}`);
     }
 
     if (title !== '') {
         fields = parseFields(fields);
-        
+
         const embed = createEmbed(title, url, description, thumbnail, image, color, footer, fields);
         channel.send({ embeds: [embed] });
+        console.log(`Embed sent: ${title} \n`);
     }
 }
 
