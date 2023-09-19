@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-const { sendMessage, editEmbed, getChannelMessages } = require('./discordBot');
+const { sendMessage, editEmbed, getChannelMessages, parseFields } = require('./discordBot');
 const embed_id = "1149389626977562744"
 
 app.use(express.urlencoded({ extended: true }));
@@ -25,12 +25,9 @@ app.get('/get-channel-messages', async (req, res) => {
 });
 
 app.post('/send-message', (req, res) => {
-    const { content, title, url, description, thumbnail, image, color, footer } = req.body;
-    console.log(title, url, description, thumbnail, image, color, footer);
+    const { content, title, url, description, thumbnail, image, color, footer, fields } = req.body;
 
-    // TODO: implement fields correctly
-    const fields = null;
-    sendMessage(content, title, url, description, thumbnail, fields, image, color, footer);
+    sendMessage(content, title, url, description, thumbnail, image, color, footer, fields);
     res.redirect('/');
 });
 

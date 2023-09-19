@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addFieldButton = document.getElementById('add-field');
     const fetchButton = document.getElementById('fetch-data');
     const messagesContainer = document.getElementById('messages-container');
+    const sendMessageForm = document.getElementById('sendMessage');
 
     const colorInput = document.getElementById('color');
     const embedDiv = document.getElementById('embedDiv');
@@ -21,6 +22,26 @@ document.addEventListener('DOMContentLoaded', () => {
             event.target.parentElement.parentElement.remove();
             fieldCounter--;
         }
+    });
+
+    sendMessageForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const fields = [];
+
+        for (const child of fieldsContainer.children) {
+            if (child.fieldObject) {
+                fields.push({
+                    name: child.fieldObject.title ? child.fieldObject.title.value : '',
+                    value: child.fieldObject.description ? child.fieldObject.description.value : '',
+                    inline: child.fieldObject.inline ? child.fieldObject.inline.checked : true
+                });
+            }
+        }
+
+        sendMessageForm.elements.fields.value = JSON.stringify(fields);
+
+        sendMessageForm.submit();
     });
 
     fetchButton.addEventListener('click', () => {
@@ -91,11 +112,6 @@ function createField() {
     description.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
     
     // Inline Checkbox
-    // <div class="checkbox-wrapper-10">
-    //   <input class="tgl tgl-flip" id="cb5" type="checkbox" checked />
-    //   <label class="tgl-btn" data-tg-off="Nope" data-tg-on="Yeah!" for="cb5"></label>
-    // </div>
-
     const inlineButtonDiv = document.createElement('div');
     inlineButtonDiv.className = 'checkbox-wrapper-10 mt-1 ml-2';
 
@@ -120,8 +136,6 @@ function createField() {
     removeButton.textContent = 'Remove';
     removeButton.type = 'button';
     
-
-
     field.appendChild(label);
     field.appendChild(document.createElement('br'));
 
@@ -135,6 +149,14 @@ function createField() {
     field.appendChild(document.createElement('br'));
     
     fieldCounter++; 
+
+    const fieldObject = {
+        title: titleInput,
+        description: description,
+        inline: inlineButton
+    };
+
+    field.fieldObject = fieldObject;
     return field;
 }
 

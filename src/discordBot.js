@@ -10,18 +10,18 @@ client.once(Events.ClientReady, c => {
 
 client.login(token);
 
-function sendMessage(message, title, url, description, thumbnail, fields, image, color, footer) {
-    const channel = client.channels.cache.get(channel_id);
-    console.log(`Channel: ${channel.name}`);
+function sendMessage(message, title, url, description, thumbnail, image, color, footer, fields) {
 
-    console.log(title, url, description, thumbnail, image, color, footer);
+    const channel = client.channels.cache.get(channel_id);
 
     if (message !== '') {
         channel.send(message);
     }
 
     if (title !== '') {
-        const embed = createEmbed(title, url, description, thumbnail, fields, image, color, footer);
+        fields = parseFields(fields);
+        
+        const embed = createEmbed(title, url, description, thumbnail, image, color, footer, fields);
         channel.send({ embeds: [embed] });
     }
 }
@@ -30,7 +30,7 @@ function convertColor(color) {
     return Number("0x" + color.substring(1));
 }
 
-function createEmbed(title, url, description, thumbnail, fields, image, color, footer) {
+function createEmbed(title, url, description, thumbnail, image, color, footer, fields) {
     const exampleEmbed = new EmbedBuilder()
         exampleEmbed.setTitle(title);
 
@@ -39,8 +39,6 @@ function createEmbed(title, url, description, thumbnail, fields, image, color, f
         }
 
         if (url !== '') {
-            console.log(url);
-            console.log("how am i here");
             exampleEmbed.setURL(url);
         }
     
@@ -62,10 +60,9 @@ function createEmbed(title, url, description, thumbnail, fields, image, color, f
             exampleEmbed.setFooter({ text: footer, iconURL: thumbnail });
         }
 
-        if (length(fields) > 0) {
-            fields.forEach(field => {
-                exampleEmbed.addFields(field.name, field.value, field.inline);
-            });
+        
+        if (fields.length > 0) {
+            exampleEmbed.addFields(fields);
         }
         
     return exampleEmbed;
@@ -97,6 +94,21 @@ async function getChannelMessages(channel_id) {
         console.error('Error fetching messages:', error);
         return []; // Return an empty array in case of an error
     }
+}
+
+function parseFields(fields) {
+    const data = JSON.parse(fields);
+    // replace '' values with '\u200b' (empty space)
+    // to prevent addfields from throwing an error
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].name === '') {
+            data[i].name = '\u200b';
+        }
+        if (data[i].value === '') {
+            data[i].value = '\u200b';
+        }
+    }
+    return data;
 }
 
 module.exports = { sendMessage, editEmbed, getChannelMessages };
