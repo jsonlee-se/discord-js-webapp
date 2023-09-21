@@ -31,6 +31,13 @@ app.post('/send-message', (req, res) => {
     res.redirect('/');
 });
 
+app.post('/edit-embed', (req, res) => {
+    const { title, url, description, thumbnail, image, color, footer, fields, messageId } = req.body;
+    // console.log(title, url, description, thumbnail, image, color, footer, fields, messageId);
+    editEmbed('', title, url, description, thumbnail, image, color, footer, fields, messageId);
+    res.redirect('/');
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

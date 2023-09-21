@@ -33,53 +33,58 @@ function convertColor(color) {
 }
 
 function createEmbed(title, url, description, thumbnail, image, color, footer, fields) {
-    const exampleEmbed = new EmbedBuilder()
-        exampleEmbed.setTitle(title);
+    const embed = new EmbedBuilder()
+        embed.setTitle(title);
 
         if (color !== '') {
-            exampleEmbed.setColor(convertColor(color));
+            embed.setColor(convertColor(color));
         }
 
         if (url !== '') {
-            exampleEmbed.setURL(url);
+            embed.setURL(url);
         }
     
         if (description !== '') {
-            exampleEmbed.setDescription(description);
+            embed.setDescription(description);
         }
     
         if (thumbnail !== '') {
-            exampleEmbed.setThumbnail(thumbnail);
+            embed.setThumbnail(thumbnail);
         }
     
         if (image !== '') {
-            exampleEmbed.setImage(image);
+            embed.setImage(image);
         }
     
-        exampleEmbed.setTimestamp();
+        embed.setTimestamp();
     
         if (footer !== '') {
-            exampleEmbed.setFooter({ text: footer, iconURL: thumbnail });
+            embed.setFooter({ text: footer, iconURL: thumbnail });
         }
 
         
         if (fields.length > 0) {
-            exampleEmbed.addFields(fields);
+            embed.addFields(fields);
         }
         
-    return exampleEmbed;
+    return embed;
 }
 
 // TODO: implement correctly
-function editEmbed(message_id) {
+function editEmbed(content, title, url, description, thumbnail, image, color, footer, fields, messageId) {
     const channel = client.channels.cache.get(channel_id);
     console.log(`Channel: ${channel.name}`);
 
-    //get the message by id
-    const message = channel.messages.fetch(message_id)
-        // .then(message => message.edit({ embeds: [exampleEmbed] }));
-        .then(message => console.log(message.embeds[0].title + "\n" +
-        message.embeds[0].description));
+    if (title !== '') {
+        fields = parseFields(fields);
+
+        const newEmbed = createEmbed(title, url, description, thumbnail, image, color, footer, fields);
+        
+        const message = channel.messages.fetch(messageId)
+        .then(message => message.edit({ embeds: [newEmbed] }));
+        // .then(message => console.log(message.embeds[0].title + "\n" +
+        // message.embeds[0].description));
+    }
 }
 
 async function getChannelMessages(channel_id) {
@@ -91,6 +96,7 @@ async function getChannelMessages(channel_id) {
         messages.forEach(message => {
             messages_array.push(message);
         });
+
         return messages_array;
     } catch (error) {
         console.error('Error fetching messages:', error);
