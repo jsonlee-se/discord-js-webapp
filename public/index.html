@@ -5,9 +5,9 @@
     <script src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-dark-4">
+<body>
     <div class="container">
-        <div class="inline-div">
+        <div class="inline-div p-1">
             <form action="/send-message" method="POST" id="sendMessage">
                 <label class="font-bold" for="content">Content</label>
                     <textarea class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" id="content" name="content" rows="4" cols="50"></textarea>
@@ -66,9 +66,9 @@
                 <button class="discord-button mt-4 font-bold" type="submit">Send</button>
             </form>
         </div>
-        <div class="inline-div">
-            <button id="fetch-data">Fetch embeds</button>
-            <div id="messages-container"></div>
+        <div class="inline-div p-1">
+            <div id="messages-container" style="overflow: scroll;"></div>
+            <button id="fetch-data" class="discord-button w-full">Fetch embeds</button>
         </div>
     </div>
 
