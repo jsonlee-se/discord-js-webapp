@@ -166,6 +166,9 @@ function createField(title = '', des = '', inline = true) {
 
 function createEmbedFormWithPlaceholders(title, url, thumbnail, description, image, color, footer, fields, message_id) {
     const embedDiv = document.createElement('div');
+    embedDiv.className = 'mb-2';
+
+
     const embedForm = document.createElement('form');
 
     embedForm.setAttribute('action', '/edit-embed');
@@ -416,32 +419,101 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
         embedForm.submit();
     });
 
-    embedBody.appendChild(titleLabel);
-    embedBody.appendChild(titleInput);
-    embedBody.appendChild(document.createElement('br'));
-    embedBody.appendChild(document.createElement('br'));
-    embedBody.appendChild(descriptionLabel);
-    embedBody.appendChild(descriptionInput);
-    embedBody.appendChild(document.createElement('br'));
-    embedBody.appendChild(document.createElement('br'));
-    embedBody.appendChild(urlDiv);
-    embedBody.appendChild(document.createElement('br'));
-    embedBody.appendChild(imageColorDiv);
-    embedBody.appendChild(document.createElement('br'));
-    embedBody.appendChild(footerLabel);
-    embedBody.appendChild(footerInput);
-    embedBody.appendChild(document.createElement('br'));
-    embedBody.appendChild(document.createElement('br'));
-    embedBody.appendChild(embedFieldsContainer);
-    embedBody.appendChild(fieldsInput);
-    embedBody.appendChild(addFieldButton);
-    embedBody.appendChild(document.createElement('br'));
-    embedBody.appendChild(editButton);
+    //  Accordion
 
+    const accordionDiv = document.createElement('div');
+
+    const accordionLabel = document.createElement('label');
+    accordionLabel.className = 'font-bold';
+    accordionLabel.textContent = ' : ' + title;
+
+
+    const accordionState = document.createElement('input');
+    accordionState.setAttribute('type', 'checkbox');
+    accordionState.hidden = true;
+    accordionState.checked = true;
+
+    const accordionIcon = document.createElement('i');
+    accordionIcon.className = 'fi fi-rr-angle-small-right';
+
+    const accordionBody = document.createElement('div');
+    accordionBody.className = 'accordion-body';
+
+    accordionDiv.appendChild(accordionIcon);
+    accordionDiv.appendChild(titleLabel);
+    accordionDiv.appendChild(accordionLabel);
+
+    accordionDiv.addEventListener('click', () => {
+        if (accordionState.checked) {
+            accordionIcon.className = 'fi fi-rr-angle-small-down';
+            accordionBody.style.maxHeight = getMaxHeightToChildren(embedDiv);
+            accordionState.checked = false;
+        } else {
+            accordionIcon.className = 'fi fi-rr-angle-small-right';
+            accordionBody.style.maxHeight = '0px';
+            accordionState.checked = true;
+            
+        }
+        accordionLabel.classList.toggle('accordion-hidden');
+    });
+
+    embedBody.appendChild(accordionDiv);
+    embedBody.appendChild(accordionState);
+
+    accordionBody.appendChild(titleInput);
+    accordionBody.appendChild(document.createElement('br'));
+    accordionBody.appendChild(document.createElement('br'));
+    accordionBody.appendChild(descriptionLabel);
+    accordionBody.appendChild(descriptionInput);
+    accordionBody.appendChild(document.createElement('br'));
+    accordionBody.appendChild(document.createElement('br'));
+    accordionBody.appendChild(urlDiv);
+    accordionBody.appendChild(document.createElement('br'));
+    accordionBody.appendChild(imageColorDiv);
+    accordionBody.appendChild(document.createElement('br'));
+    accordionBody.appendChild(footerLabel);
+    accordionBody.appendChild(footerInput);
+    accordionBody.appendChild(document.createElement('br'));
+    accordionBody.appendChild(document.createElement('br'));
+    accordionBody.appendChild(embedFieldsContainer);
+    accordionBody.appendChild(fieldsInput);
+    accordionBody.appendChild(addFieldButton);
+    accordionBody.appendChild(document.createElement('br'));
+    accordionBody.appendChild(editButton);
+    
+    embedBody.appendChild(accordionBody);
     embedForm.appendChild(messageIdInput);
     embedForm.appendChild(embedBody);
 
     embedDiv.appendChild(embedForm);
-    
+
     return embedDiv;
+}
+
+function getMaxHeightToChildren(element) {
+    // Get all the children
+    const children = getAllChildrenRecursive(element);
+
+    // Calculate total height of children
+    let totalHeight = 0;
+    for (let i = 0; i < children.length; i++) {
+        totalHeight += children[i].offsetHeight;
+    }
+
+    return totalHeight + 'px';
+}
+
+function getAllChildrenRecursive(element, result = []) {
+    const children = element.children;
+
+    if (children.length === 0) {
+        return result;
+    }
+
+    for (let i = 0; i < children.length; i++) {
+        result.push(children[i]);
+        getAllChildrenRecursive(children[i], result);
+    }
+
+    return result;
 }

@@ -12,6 +12,7 @@
     max-width: 632px;
 }
 
+
 @media (min-width: 1280px) {
     body {
         max-width: 1280px;
@@ -23,8 +24,8 @@ body {
     color : #D1D5D8;
     font-family: 'GG', sans-serif;
     background: #000000;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to bottom left, #434343, #111111);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to bottom left, #434343, #111111); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: -webkit-linear-gradient(to bottom left, #434343, #111111);  /*Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom left, #434343, #111111); /*W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     height: 100vh;
 }
 
@@ -66,6 +67,9 @@ input[type="color"]::-webkit-color-swatch {
 }
 .bg-dark-4 {
     background-color: #37393F;
+}
+.bg-5 {
+    background-color : #16171a;
 }
 
 /* Borders */
@@ -131,6 +135,12 @@ input[type="color"]::-webkit-color-swatch {
 .p-1 {
     padding: 0.25rem;
 }
+.p-2 {
+    padding: 0.5rem;
+}
+.p-3 {
+    padding: 0.75rem;
+}
 /* Text */
 .text-white {
     color: #fff;
@@ -159,6 +169,9 @@ input[type="color"]::-webkit-color-swatch {
 }
 .ml-2 {
     margin-left: 0.5rem;
+}
+.mb-2 {
+    margin-bottom: 0.5rem;
 }
 
 /* Buttons */
@@ -338,14 +351,12 @@ input[type="color"]::-webkit-color-swatch {
 /* Scrollbar */
 *::-webkit-scrollbar-track
 {
-    margin-left: 2px;
 	border-radius: 10px;
 	background-color: #36373a;
 }
 
 *::-webkit-scrollbar
 {
-    margin-left: 2px;
 	width: 12px;
     border-radius: 10px;
 	background-color: #36373a;
@@ -357,6 +368,20 @@ input[type="color"]::-webkit-color-swatch {
 	background-color: #272b2e;
 }
 
+/* Icon */
 i{
     pointer-events: none;
+}
+
+/* Accordion */
+.accordion-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.accordion-hidden {
+    display: none;
 }
