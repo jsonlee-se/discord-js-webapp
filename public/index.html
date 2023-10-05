@@ -4,71 +4,76 @@
     <title>Send Data to Discord Bot</title>
     <script src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/5c17f567-6039-4336-9b78-22209733dc04/webchat/config.js" defer></script>
 </head>
 <body>
     <div class="container">
-        <div class="inline-div p-1">
+        <div class="inline-div p-1" style="height: 720px;">
             <form action="/send-message" method="POST" id="sendMessage">
-                <label class="font-bold" for="content">Content</label>
-                    <textarea class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" id="content" name="content" rows="4" cols="50"></textarea>
-                    <br/>
-                    <br/>
+                <div class="scrollbar" style="overflow-y: auto; height: 680px;">
+                    <label class="font-bold" for="content">Content</label>
+                        <textarea class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" id="content" name="content" rows="4" cols="50"></textarea>
+                        <br/>
+                        <br/>
 
-                <p class="font-bold">Embed</p>
-                <div class="bg-dark-3 border-1-4 rounded-md" style="position: relative; padding: 0.75rem" id="embedDiv">
-                    <label class="font-bold" for="title">Title</label>
-                    <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="title" name="title">
-                    <br/>
-                    <br/>
+                    <p class="font-bold">Embed</p>
+                    <div class="bg-dark-3 border-1-4 rounded-md" style="position: relative; padding: 0.75rem" id="embedDiv">
+                        <label class="font-bold" for="title">Title</label>
+                        <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="title" name="title">
+                        <br/>
+                        <br/>
 
-                    <label class="font-bold" for="description">Description</label>
-                    <textarea class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" id="description" name="description" rows="4" cols="50"></textarea>
-                    <br/>
-                    <br/>
-                    
-                    <div class="container">
-                        <div class="inline-div">
-                            <label class="font-bold" for="url">Title URL</label>
-                            <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="url" name="url">
-                        </div>
-                        <div class="inline-div pl-2">
-                            <label class="font-bold" for="thumbnail">Thumbnail URL</label>
-                            <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="thumbnail" name="thumbnail">
-                        </div>
-                    </div>
-                    <br/>
-                    
-                    
-                    <div class="container">
-                        <div class="inline-div">
-                            <label class="font-bold" for="image">Image URL</label>
-                            <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="image" name="image">
-                        </div>
+                        <label class="font-bold" for="description">Description</label>
+                        <textarea class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" id="description" name="description" rows="4" cols="50"></textarea>
+                        <br/>
+                        <br/>
                         
-                        <div class="inline-div pl-2">
-                            <label class="font-bold"for="color">Color</label>
-                            <input class="rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white h-25em" type="color" id="color" name="color">
+                        <div class="container">
+                            <div class="inline-div">
+                                <label class="font-bold" for="url">Title URL</label>
+                                <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="url" name="url">
+                            </div>
+                            <div class="inline-div pl-2">
+                                <label class="font-bold" for="thumbnail">Thumbnail URL</label>
+                                <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="thumbnail" name="thumbnail">
+                            </div>
                         </div>
-                    </div>
-                    <br/>
-                    
-                    <label class="font-bold"for="footer">Footer</label>
-                    <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white"type="text" id="footer" name="footer">
-                    <br/>
-                    <br/>
+                        <br/>
+                        
+                        
+                        <div class="container">
+                            <div class="inline-div">
+                                <label class="font-bold" for="image">Image URL</label>
+                                <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white" type="text" id="image" name="image">
+                            </div>
+                            
+                            <div class="inline-div pl-2">
+                                <label class="font-bold"for="color">Color</label>
+                                <input class="rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white h-25em" type="color" id="color" name="color">
+                            </div>
+                        </div>
+                        <br/>
+                        
+                        <label class="font-bold"for="footer">Footer</label>
+                        <input class="bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white"type="text" id="footer" name="footer">
+                        <br/>
+                        <br/>
 
-                    <div id="fields-container"></div>
-                    <input type="hidden" name="fields" id="fieldsInput"> <!-- Input field to store the fields data -->
-                    <button class="discord-button" id="add-field" type="button">Add Field</button>
-                    <br/>
+                        <div id="fields-container"></div>
+                        <input type="hidden" name="fields" id="fieldsInput"> <!-- Input field to store the fields data -->
+                        <button class="green-discord-button" id="add-field" type="button">Add Field</button>
+                        <br/>
+                    </div>
                 </div>
                 
-                <button class="discord-button mt-4 font-bold" type="submit">Send</button>
+                <button class="discord-button mt-4 font-bold bottom-element" type="submit">Send <i class="fi fi-rr-paper-plane"></i></button>
             </form>
         </div>
-        <div class="inline-div p-1">
-            <div id="messages-container" style="overflow: scroll;"></div>
-            <button id="fetch-data" class="discord-button w-full">Fetch embeds</button>
+        <div class="inline-div p-1" style="height: 720px;">
+            <div id="messages-container" class="scrollbar" style="overflow-y: auto; height: 680px;"></div>
+            <button id="fetch-data" class="discord-button font-bold bottom-element mt-4">Fetch embeds <i class="fi fi-rr-download"></i></button>
         </div>
     </div>
 

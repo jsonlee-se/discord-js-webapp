@@ -4,7 +4,6 @@ const app = express();
 const port = 3000;
 
 const { sendMessage, editEmbed, getChannelMessages, parseFields } = require('./discordBot');
-const embed_id = "1149389626977562744"
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
@@ -16,7 +15,7 @@ app.get('/', (req, res) => {
 
 app.get('/get-channel-messages', async (req, res) => {
     try {
-        const messages = await getChannelMessages("1147850593956790363");
+        const messages = await getChannelMessages();
         res.json(messages);
     } catch (error) {
         console.error('Error getting messages:', error);

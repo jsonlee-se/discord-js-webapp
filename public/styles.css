@@ -3,6 +3,13 @@
 }
 .inline-div {
     flex: 1; /* Distribute available space equally among the divs */
+    position: relative;
+}
+.bottom-element {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    max-width: 632px;
 }
 
 @media (min-width: 1280px) {
@@ -154,6 +161,7 @@ input[type="color"]::-webkit-color-swatch {
     margin-left: 0.5rem;
 }
 
+/* Buttons */
 .discord-button { 
     display: inline-block;
     outline: none;
@@ -172,6 +180,28 @@ input[type="color"]::-webkit-color-swatch {
     transition: background-color .17s ease,color .17s ease;
     :hover {
         background-color: rgb(71, 82, 196);
+    }
+
+}
+
+.green-discord-button { 
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 16px;
+    height: 38px;
+    min-width: 96px;
+    min-height: 38px;
+    border: none;
+    color: #fff;
+    background-color: #65702a;
+    transition: background-color .17s ease,color .17s ease;
+    :hover {
+        background-color: #424A1C;
     }
 
 }
@@ -305,3 +335,28 @@ input[type="color"]::-webkit-color-swatch {
     transform: rotateY(20deg);
 }
 
+/* Scrollbar */
+*::-webkit-scrollbar-track
+{
+    margin-left: 2px;
+	border-radius: 10px;
+	background-color: #36373a;
+}
+
+*::-webkit-scrollbar
+{
+    margin-left: 2px;
+	width: 12px;
+    border-radius: 10px;
+	background-color: #36373a;
+}
+
+*::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #272b2e;
+}
+
+i{
+    pointer-events: none;
+}

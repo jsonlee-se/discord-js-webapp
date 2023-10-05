@@ -82,12 +82,10 @@ function editEmbed(content, title, url, description, thumbnail, image, color, fo
         
         const message = channel.messages.fetch(messageId)
         .then(message => message.edit({ embeds: [newEmbed] }));
-        // .then(message => console.log(message.embeds[0].title + "\n" +
-        // message.embeds[0].description));
     }
 }
 
-async function getChannelMessages(channel_id) {
+async function getChannelMessages() {
     const channel = client.channels.cache.get(channel_id);
 
     try {

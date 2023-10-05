@@ -87,11 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-function createField() {
-    createField('', '', true);
-}
-
-function createField(title, des, inline) {
+function createField(title = '', des = '', inline = true) {
     const field = document.createElement('div');
     
     // Label
@@ -191,7 +187,8 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     // Title
     const titleLabel = document.createElement('label');
     titleLabel.setAttribute('for', 'title');
-    titleLabel.textContent = 'Title: ';
+    titleLabel.textContent = 'Title';
+    titleLabel.className = 'font-bold';
     
     const titleInput = document.createElement('input');
     titleInput.setAttribute('type', 'text');
@@ -203,7 +200,8 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     // Description
     const descriptionLabel = document.createElement('label');
     descriptionLabel.setAttribute('for', 'description');
-    descriptionLabel.textContent = 'Description: ';
+    descriptionLabel.textContent = 'Description';
+    descriptionLabel.className = 'font-bold';
 
     const descriptionInput = document.createElement('input');
     descriptionInput.setAttribute('type', 'text');
@@ -215,15 +213,16 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     // URLS AND Thumbnail DIV
     const urlDiv = document.createElement('div');
     urlDiv.className = 'container';
-    const urlLeft = document.createElement('div');
-    urlLeft.className = 'inline-div';
-    const urlthumbnailRight = document.createElement('div');
-    urlthumbnailRight.className = 'inline-div pl-2';
+    const urlTitleLeft = document.createElement('div');
+    urlTitleLeft.className = 'inline-div';
+    const urlThumbnailRight = document.createElement('div');
+    urlThumbnailRight.className = 'inline-div pl-2';
 
     // URL
     const urlLabel = document.createElement('label');
     urlLabel.setAttribute('for', 'url');
-    urlLabel.textContent = 'URL: ';
+    urlLabel.textContent = 'Title URL';
+    urlLabel.className = 'font-bold';
 
     const urlInput = document.createElement('input');
     urlInput.setAttribute('type', 'text');
@@ -232,13 +231,14 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     urlInput.setAttribute('value', url);
     urlInput.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
     
-    urlLeft.appendChild(urlLabel);
-    urlLeft.appendChild(urlInput);
+    urlTitleLeft.appendChild(urlLabel);
+    urlTitleLeft.appendChild(urlInput);
 
     // Thumbnail
     const thumbnailLabel = document.createElement('label');
     thumbnailLabel.setAttribute('for', 'thumbnail');
-    thumbnailLabel.textContent = 'Thumbnail: ';
+    thumbnailLabel.textContent = 'Thumbnail URL';
+    thumbnailLabel.className = 'font-bold';
 
     const thumbnailInput = document.createElement('input');
     thumbnailInput.setAttribute('type', 'text');
@@ -247,24 +247,25 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     thumbnailInput.setAttribute('value', thumbnail);
     thumbnailInput.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
     
-    urlthumbnailRight.appendChild(thumbnailLabel);
-    urlthumbnailRight.appendChild(thumbnailInput);
+    urlThumbnailRight.appendChild(thumbnailLabel);
+    urlThumbnailRight.appendChild(thumbnailInput);
 
-    urlDiv.appendChild(urlLeft);
-    urlDiv.appendChild(urlthumbnailRight);
+    urlDiv.appendChild(urlTitleLeft);
+    urlDiv.appendChild(urlThumbnailRight);
 
     // Image and Color DIV
     const imageColorDiv = document.createElement('div');
     imageColorDiv.className = 'container';
-    const imageLeft = document.createElement('div');
-    imageLeft.className = 'inline-div';
-    const colorRight = document.createElement('div');
-    colorRight.className = 'inline-div pl-2';
+    const imageColorLeft = document.createElement('div');
+    imageColorLeft.className = 'inline-div';
+    const imageColorRight = document.createElement('div');
+    imageColorRight.className = 'inline-div pl-2';
 
     // Image
     const imageLabel = document.createElement('label');
     imageLabel.setAttribute('for', 'image');
-    imageLabel.textContent = 'Image: ';
+    imageLabel.textContent = 'Image URL';
+    imageLabel.className = 'font-bold';
 
     const imageInput = document.createElement('input');
     imageInput.setAttribute('type', 'text');
@@ -273,15 +274,22 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     imageInput.setAttribute('value', image);
     imageInput.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
 
-    imageLeft.appendChild(imageLabel);
-    imageLeft.appendChild(imageInput);
+    imageColorLeft.appendChild(imageLabel);
+    imageColorLeft.appendChild(imageInput);
 
     // Color
-    const colorString = "#" + color.toString(16)
+    var colorString;
+    if (color === 0) {
+        colorString = "#000000";
+    }
+    else {
+        colorString = "#" + color.toString(16)
+    }
 
     const colorLabel = document.createElement('label');
     colorLabel.setAttribute('for', 'color');
-    colorLabel.textContent = 'Color: ';
+    colorLabel.textContent = 'Color';
+    colorLabel.className = 'font-bold';
 
     const colorInput = document.createElement('input');
     colorInput.setAttribute('type', 'color');
@@ -289,17 +297,31 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     colorInput.setAttribute('name', 'color');
     colorInput.setAttribute('value', colorString);
     colorInput.className = 'rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white h-25em';
-    
-    colorRight.appendChild(colorLabel);
-    colorRight.appendChild(colorInput);
 
-    imageColorDiv.appendChild(imageLeft);
-    imageColorDiv.appendChild(colorRight);
+    colorInput.style.backgroundColor = colorString;
+    embedBody.style.borderLeftColor = colorString;
+    embedBody.style.borderLeftStyle = 'solid';
+    embedBody.style.borderLeftWidth = '5px';
+
+    colorInput.addEventListener('input', function() {
+        const selectedColor = colorInput.value;
+        colorInput.style.backgroundColor = selectedColor;
+        embedBody.style.borderLeftColor = selectedColor;
+        embedBody.style.borderLeftStyle = 'solid';
+        embedBody.style.borderLeftWidth = '5px';
+    });
+    
+    imageColorRight.appendChild(colorLabel);
+    imageColorRight.appendChild(colorInput);
+
+    imageColorDiv.appendChild(imageColorLeft);
+    imageColorDiv.appendChild(imageColorRight);
     
     // Footer
     const footerLabel = document.createElement('label');
     footerLabel.setAttribute('for', 'footer');
-    footerLabel.textContent = 'Footer: ';
+    footerLabel.textContent = 'Footer';
+    footerLabel.className = 'font-bold';
 
     const footerInput = document.createElement('input');
     footerInput.setAttribute('type', 'text');
@@ -328,7 +350,7 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
 
     // add field button
     const addFieldButton = document.createElement('button');
-    addFieldButton.className = 'discord-button';
+    addFieldButton.className = 'green-discord-button';
     addFieldButton.textContent = 'Add Field';
     addFieldButton.type = 'button';
     addFieldButton.addEventListener('click', () => {
@@ -346,9 +368,14 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
 
     // edit button
     const editButton = document.createElement('button');
-    editButton.className = 'edit-embed-button discord-button font-bold mt-1 ml-2';
-    editButton.textContent = 'Edit';
+    editButton.className = 'edit-embed-button discord-button font-bold mt-1';
+    editButton.textContent = 'Edit ';
     editButton.type = 'button';
+
+    // edit icon
+    const editIcon = document.createElement('i');
+    editIcon.className = 'fi fi-rr-pencil';
+    editButton.appendChild(editIcon);
 
     editButton.addEventListener('click', () => {
         const embedData = {
@@ -357,7 +384,7 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
             thumbnail: thumbnailInput.value || '',
             description: descriptionInput.value || '',
             image: imageInput.value || '',
-            color: parseInt(colorInput.value.substring(1), 16), // Convert hex to decimal
+            color: colorInput.value || 0x000000, // Convert hex to decimal
             footer: footerInput.value || '',
             messageId: messageIdInput.value || '',
 
@@ -373,7 +400,8 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
                 });
             }
         }
-
+        // TODO
+        console.log(embedData.color);
 
         embedForm.elements.title.value = embedData.title;
         embedForm.elements.url.value = embedData.url;
@@ -383,13 +411,14 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
         embedForm.elements.color.value = embedData.color;
         embedForm.elements.footer.value = embedData.footer;
         embedForm.elements.messageId.value = embedData.messageId;
-        embedForm.elements.fields.value = editedFields.length > 0 ? JSON.stringify(editedFields) : '';
+        embedForm.elements.fields.value = JSON.stringify(editedFields);
 
         embedForm.submit();
     });
 
     embedBody.appendChild(titleLabel);
     embedBody.appendChild(titleInput);
+    embedBody.appendChild(document.createElement('br'));
     embedBody.appendChild(document.createElement('br'));
     embedBody.appendChild(descriptionLabel);
     embedBody.appendChild(descriptionInput);
@@ -407,10 +436,10 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     embedBody.appendChild(fieldsInput);
     embedBody.appendChild(addFieldButton);
     embedBody.appendChild(document.createElement('br'));
+    embedBody.appendChild(editButton);
 
     embedForm.appendChild(messageIdInput);
     embedForm.appendChild(embedBody);
-    embedForm.appendChild(editButton);
 
     embedDiv.appendChild(embedForm);
     
