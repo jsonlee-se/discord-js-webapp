@@ -9,7 +9,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/', (req, res) => {
-    // Render the HTML form here
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
@@ -32,7 +31,6 @@ app.post('/send-message', (req, res) => {
 
 app.post('/edit-embed', (req, res) => {
     const { title, url, description, thumbnail, image, color, footer, fields, messageId } = req.body;
-    // console.log(title, url, description, thumbnail, image, color, footer, fields, messageId);
     editEmbed('', title, url, description, thumbnail, image, color, footer, fields, messageId);
     res.redirect('/');
 });

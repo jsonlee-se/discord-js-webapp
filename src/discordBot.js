@@ -1,4 +1,3 @@
-// at the top of your file
 const { Client, Events, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const { token, channel_id } = require('../config.json');
 
@@ -70,10 +69,8 @@ function createEmbed(title, url, description, thumbnail, image, color, footer, f
     return embed;
 }
 
-// TODO: implement correctly
 function editEmbed(content, title, url, description, thumbnail, image, color, footer, fields, messageId) {
     const channel = client.channels.cache.get(channel_id);
-    console.log(`Channel: ${channel.name}`);
 
     if (title !== '') {
         fields = parseFields(fields);
@@ -82,6 +79,7 @@ function editEmbed(content, title, url, description, thumbnail, image, color, fo
         
         const message = channel.messages.fetch(messageId)
         .then(message => message.edit({ embeds: [newEmbed] }));
+        console.log(`Embed edited: ${title} \n`);
     }
 }
 
