@@ -168,60 +168,87 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     const embedDiv = document.createElement('div');
     embedDiv.className = 'mb-2';
 
+    const embedForm = createEmbedForm(message_id);
 
+    const embedBody = createEmbedBody(color);
+
+    const titleInput = createInput('title', 'Title', title);
+    const descriptionInput = createInput('description', 'Description', description);
+    const urlDiv = createUrlDiv(url, thumbnail);
+    const imageColorDiv = createImageColorDiv(image, color, embedBody);
+    const footerInput = createInput('footer', 'Footer', footer);
+    const embedFieldsContainer = createEmbedFieldsContainer(fields);
+    const addFieldButton = createAddFieldButton(embedFieldsContainer);
+    const editButton = createEditButton(embedForm, titleInput, urlDiv, thumbnail, descriptionInput, imageColorDiv, color, footerInput, message_id, embedFieldsContainer);
+
+    const accordionBody = createAccordionBody(titleInput, descriptionInput, urlDiv, imageColorDiv, footerInput, embedFieldsContainer, addFieldButton, editButton);
+
+    const accordionDiv = createAccordionDiv(title, titleInput, accordionBody);
+
+    embedBody.appendChild(accordionDiv);
+    embedBody.appendChild(accordionBody);
+    embedForm.appendChild(embedBody);
+    embedDiv.appendChild(embedForm);
+
+    return embedDiv;
+}
+
+function createEmbedForm(message_id) {
     const embedForm = document.createElement('form');
-
     embedForm.setAttribute('action', '/edit-embed');
     embedForm.setAttribute('method', 'POST');
     embedForm.setAttribute('id', `embed_${embedCounter}`);
 
+    const messageIdInput = createHiddenInput('messageId', message_id);
+    embedForm.appendChild(messageIdInput);
+
+    return embedForm;
+}
+
+function createEmbedBody(color) {
+    const colorString = color === 0 ? "#000000" : "#" + color.toString(16)
     const embedBody = document.createElement('div');
     embedBody.className = 'bg-dark-3 border-1-4 rounded-md';
     embedBody.style.position = 'relative';
     embedBody.style.padding = '0.75rem';
 
-    // hidden input with message id
-    const messageIdInput = document.createElement('input');
-    messageIdInput.setAttribute('type', 'hidden');
-    messageIdInput.setAttribute('id', 'messageId');
-    messageIdInput.setAttribute('name', 'messageId');
-    messageIdInput.setAttribute('value', message_id);
+    embedBody.style.borderLeftColor = colorString;
+    embedBody.style.borderLeftStyle = 'solid';
+    embedBody.style.borderLeftWidth = '5px';
 
-    // Title
-    const titleLabel = document.createElement('label');
-    titleLabel.setAttribute('for', 'title');
-    titleLabel.textContent = 'Title';
-    titleLabel.className = 'font-bold';
-    
-    const titleInput = document.createElement('input');
-    titleInput.setAttribute('type', 'text');
-    titleInput.setAttribute('id', 'title');
-    titleInput.setAttribute('name', 'title');
-    titleInput.setAttribute('value', title);
-    titleInput.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white'; 
+    return embedBody;
+}
 
-    // Description
-    const descriptionLabel = document.createElement('label');
-    descriptionLabel.setAttribute('for', 'description');
-    descriptionLabel.textContent = 'Description';
-    descriptionLabel.className = 'font-bold';
+function createInput(id, label, value) {
+    const inputLabel = document.createElement('label');
+    inputLabel.setAttribute('for', id);
+    inputLabel.textContent = label;
+    inputLabel.className = 'font-bold';
 
-    const descriptionInput = document.createElement('input');
-    descriptionInput.setAttribute('type', 'text');
-    descriptionInput.setAttribute('id', 'description');
-    descriptionInput.setAttribute('name', 'description');
-    descriptionInput.setAttribute('value', description);
-    descriptionInput.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
+    const input = document.createElement('input');
+    input.setAttribute('type', 'text');
+    input.setAttribute('id', id);
+    input.setAttribute('name', id);
+    input.setAttribute('value', value);
+    input.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
 
-    // URLS AND Thumbnail DIV
+    return { label: inputLabel, input };
+}
+
+function createUrlDiv(url, thumbnail) {
     const urlDiv = document.createElement('div');
     urlDiv.className = 'container';
-    const urlTitleLeft = document.createElement('div');
-    urlTitleLeft.className = 'inline-div';
-    const urlThumbnailRight = document.createElement('div');
-    urlThumbnailRight.className = 'inline-div pl-2';
 
-    // URL
+    const urlTitleLeft = createUrlTitleLeft(url);
+    const urlThumbnailRight = createUrlThumbnailRight(thumbnail);
+
+    urlDiv.appendChild(urlTitleLeft);
+    urlDiv.appendChild(urlThumbnailRight);
+
+    return urlDiv;
+}
+
+function createUrlTitleLeft(url) {
     const urlLabel = document.createElement('label');
     urlLabel.setAttribute('for', 'url');
     urlLabel.textContent = 'Title URL';
@@ -233,11 +260,16 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     urlInput.setAttribute('name', 'url');
     urlInput.setAttribute('value', url);
     urlInput.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
-    
+
+    const urlTitleLeft = document.createElement('div');
+    urlTitleLeft.className = 'inline-div';
     urlTitleLeft.appendChild(urlLabel);
     urlTitleLeft.appendChild(urlInput);
 
-    // Thumbnail
+    return urlTitleLeft;
+}
+
+function createUrlThumbnailRight(thumbnail) {
     const thumbnailLabel = document.createElement('label');
     thumbnailLabel.setAttribute('for', 'thumbnail');
     thumbnailLabel.textContent = 'Thumbnail URL';
@@ -249,22 +281,29 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     thumbnailInput.setAttribute('name', 'thumbnail');
     thumbnailInput.setAttribute('value', thumbnail);
     thumbnailInput.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
-    
+
+    const urlThumbnailRight = document.createElement('div');
+    urlThumbnailRight.className = 'inline-div pl-2';
     urlThumbnailRight.appendChild(thumbnailLabel);
     urlThumbnailRight.appendChild(thumbnailInput);
 
-    urlDiv.appendChild(urlTitleLeft);
-    urlDiv.appendChild(urlThumbnailRight);
+    return urlThumbnailRight;
+}
 
-    // Image and Color DIV
+function createImageColorDiv(image, color, embedBody) {
     const imageColorDiv = document.createElement('div');
     imageColorDiv.className = 'container';
-    const imageColorLeft = document.createElement('div');
-    imageColorLeft.className = 'inline-div';
-    const imageColorRight = document.createElement('div');
-    imageColorRight.className = 'inline-div pl-2';
 
-    // Image
+    const imageColorLeft = createImageColorLeft(image);
+    const imageColorRight = createImageColorRight(color, embedBody);
+
+    imageColorDiv.appendChild(imageColorLeft);
+    imageColorDiv.appendChild(imageColorRight);
+
+    return imageColorDiv;
+}
+
+function createImageColorLeft(image) {
     const imageLabel = document.createElement('label');
     imageLabel.setAttribute('for', 'image');
     imageLabel.textContent = 'Image URL';
@@ -277,17 +316,16 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     imageInput.setAttribute('value', image);
     imageInput.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
 
+    const imageColorLeft = document.createElement('div');
+    imageColorLeft.className = 'inline-div';
     imageColorLeft.appendChild(imageLabel);
     imageColorLeft.appendChild(imageInput);
 
-    // Color
-    var colorString;
-    if (color === 0) {
-        colorString = "#000000";
-    }
-    else {
-        colorString = "#" + color.toString(16)
-    }
+    return imageColorLeft;
+}
+
+function createImageColorRight(color, embedBody) {
+    const colorString = color === 0 ? "#000000" : "#" + color.toString(16);
 
     const colorLabel = document.createElement('label');
     colorLabel.setAttribute('for', 'color');
@@ -300,11 +338,7 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     colorInput.setAttribute('name', 'color');
     colorInput.setAttribute('value', colorString);
     colorInput.className = 'rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white h-25em';
-
     colorInput.style.backgroundColor = colorString;
-    embedBody.style.borderLeftColor = colorString;
-    embedBody.style.borderLeftStyle = 'solid';
-    embedBody.style.borderLeftWidth = '5px';
 
     colorInput.addEventListener('input', function() {
         const selectedColor = colorInput.value;
@@ -313,27 +347,33 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
         embedBody.style.borderLeftStyle = 'solid';
         embedBody.style.borderLeftWidth = '5px';
     });
-    
+
+    const imageColorRight = document.createElement('div');
+    imageColorRight.className = 'inline-div pl-2';
     imageColorRight.appendChild(colorLabel);
     imageColorRight.appendChild(colorInput);
 
-    imageColorDiv.appendChild(imageColorLeft);
-    imageColorDiv.appendChild(imageColorRight);
-    
-    // Footer
-    const footerLabel = document.createElement('label');
-    footerLabel.setAttribute('for', 'footer');
-    footerLabel.textContent = 'Footer';
-    footerLabel.className = 'font-bold';
+    return imageColorRight;
+}
 
-    const footerInput = document.createElement('input');
-    footerInput.setAttribute('type', 'text');
-    footerInput.setAttribute('id', 'footer');
-    footerInput.setAttribute('name', 'footer');
-    footerInput.setAttribute('value', footer);
-    footerInput.className = 'bg-dark-2 rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
+function createInputWithHidden(id, value) {
+    const input = createInput(id, '', value);
+    const hiddenInput = createHiddenInput(id, value);
 
-    // fields
+    return { label: input.label, input: input.input, hiddenInput };
+}
+
+function createHiddenInput(id, value) {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'hidden');
+    input.setAttribute('id', id);
+    input.setAttribute('name', id);
+    input.setAttribute('value', value);
+
+    return input;
+}
+
+function createEmbedFieldsContainer(fields) {
     const embedFieldsContainer = document.createElement('div');
     embedFieldsContainer.setAttribute('id', 'embedFields-container');
 
@@ -344,14 +384,21 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
         });
     }
 
-    // hidden input with fields
-    const fieldsInput = document.createElement('input');
-    fieldsInput.setAttribute('type', 'hidden');
-    fieldsInput.setAttribute('id', 'fields');
-    fieldsInput.setAttribute('name', 'fields');
-    fieldsInput.setAttribute('value', fields);
+    const fieldsInput = createHiddenInput('fields', fields);
 
-    // add field button
+    embedFieldsContainer.addEventListener('click', (event) => {
+        if (event.target && event.target.className === 'remove-field red-discord-button mt-1 ml-2') {
+            event.target.parentElement.parentElement.remove();
+            fieldCounter--;
+        }
+    });
+
+    embedFieldsContainer.appendChild(fieldsInput);
+
+    return embedFieldsContainer;
+}
+
+function createAddFieldButton(embedFieldsContainer) {
     const addFieldButton = document.createElement('button');
     addFieldButton.className = 'green-discord-button';
     addFieldButton.textContent = 'Add Field';
@@ -362,36 +409,56 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
         embedFieldsContainer.appendChild(newField);
     });
 
-    embedFieldsContainer.addEventListener('click', (event) => {
-        if (event.target && event.target.className === 'remove-field red-discord-button mt-1 ml-2') {
-            event.target.parentElement.parentElement.remove();
-            fieldCounter--;
-        }
-    });
+    return addFieldButton;
+}
 
-    // edit button
+function createInlineCheckbox(inline) {
+    const inlineLabel = document.createElement('label');
+    inlineLabel.setAttribute('for', 'inline');
+    inlineLabel.textContent = 'Inline';
+    inlineLabel.className = 'font-bold';
+
+    const inlineCheckbox = document.createElement('input');
+    inlineCheckbox.setAttribute('type', 'checkbox');
+    inlineCheckbox.setAttribute('id', 'inline');
+    inlineCheckbox.setAttribute('name', 'inline');
+    inlineCheckbox.checked = inline;
+    inlineCheckbox.className = 'rounded-md border-1-4 border-transparent w-full px-3 py-2 mt-1 text-white';
+
+    return { label: inlineLabel, checkbox: inlineCheckbox };
+}
+
+function createRemoveFieldButton() {
+    const removeFieldButton = document.createElement('button');
+    removeFieldButton.className = 'remove-field red-discord-button mt-1 ml-2';
+    removeFieldButton.textContent = 'Remove';
+    removeFieldButton.type = 'button';
+
+    return removeFieldButton;
+}
+
+function createEditButton(embedForm, titleInput, urlDiv, thumbnail, descriptionInput, imageColorDiv, color, footerInput, message_id, embedFieldsContainer) {
     const editButton = document.createElement('button');
     editButton.className = 'edit-embed-button discord-button font-bold mt-1';
     editButton.textContent = 'Edit ';
     editButton.type = 'button';
 
-    // edit icon
     const editIcon = document.createElement('i');
     editIcon.className = 'fi fi-rr-pencil';
     editButton.appendChild(editIcon);
 
     editButton.addEventListener('click', () => {
         const embedData = {
-            title: titleInput.value || '',
-            url: urlInput.value || '',
-            thumbnail: thumbnailInput.value || '',
-            description: descriptionInput.value || '',
-            image: imageInput.value || '',
-            color: colorInput.value || 0x000000, // Convert hex to decimal
-            footer: footerInput.value || '',
-            messageId: messageIdInput.value || '',
-
+            title: titleInput.input.value || '',
+            url: urlDiv.querySelector('#url').value || '',
+            thumbnail: urlDiv.querySelector('#thumbnail').value || '',
+            description: descriptionInput.input.value || '',
+            image: imageColorDiv.querySelector('#image').value || '',
+            color: imageColorDiv.querySelector('#color').value || 0x000000, // Convert hex to decimal
+            footer: footerInput.input.value || '',
+            messageId: message_id || '',
         };
+
         const editedFields = [];
 
         for (const child of embedFieldsContainer.children) {
@@ -403,8 +470,6 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
                 });
             }
         }
-        // TODO
-        console.log(embedData.color);
 
         embedForm.elements.title.value = embedData.title;
         embedForm.elements.url.value = embedData.url;
@@ -419,14 +484,15 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
         embedForm.submit();
     });
 
-    //  Accordion
+    return editButton;
+}
 
+function createAccordionDiv(title, titleInput, accordionBody) {
     const accordionDiv = document.createElement('div');
 
     const accordionLabel = document.createElement('label');
     accordionLabel.className = 'font-bold';
     accordionLabel.textContent = ' : ' + title;
-
 
     const accordionState = document.createElement('input');
     accordionState.setAttribute('type', 'checkbox');
@@ -436,11 +502,8 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
     const accordionIcon = document.createElement('i');
     accordionIcon.className = 'fi fi-rr-angle-small-right';
 
-    const accordionBody = document.createElement('div');
-    accordionBody.className = 'accordion-body';
-
     accordionDiv.appendChild(accordionIcon);
-    accordionDiv.appendChild(titleLabel);
+    accordionDiv.appendChild(titleInput.label);
     accordionDiv.appendChild(accordionLabel);
 
     accordionDiv.addEventListener('click', () => {
@@ -452,42 +515,38 @@ function createEmbedFormWithPlaceholders(title, url, thumbnail, description, ima
             accordionIcon.className = 'fi fi-rr-angle-small-right';
             accordionBody.style.maxHeight = '0px';
             accordionState.checked = true;
-            
         }
         accordionLabel.classList.toggle('accordion-hidden');
     });
 
-    embedBody.appendChild(accordionDiv);
-    embedBody.appendChild(accordionState);
+    return accordionDiv;
+}
 
-    accordionBody.appendChild(titleInput);
+function createAccordionBody(titleInput, descriptionInput, urlDiv, imageColorDiv, footerInput, embedFieldsContainer, addFieldButton, editButton) {
+    const accordionBody = document.createElement('div');
+    accordionBody.className = 'accordion-body';
+
+    accordionBody.appendChild(titleInput.input);
     accordionBody.appendChild(document.createElement('br'));
     accordionBody.appendChild(document.createElement('br'));
-    accordionBody.appendChild(descriptionLabel);
-    accordionBody.appendChild(descriptionInput);
+    accordionBody.appendChild(descriptionInput.label);
+    accordionBody.appendChild(descriptionInput.input);
     accordionBody.appendChild(document.createElement('br'));
     accordionBody.appendChild(document.createElement('br'));
     accordionBody.appendChild(urlDiv);
     accordionBody.appendChild(document.createElement('br'));
     accordionBody.appendChild(imageColorDiv);
     accordionBody.appendChild(document.createElement('br'));
-    accordionBody.appendChild(footerLabel);
-    accordionBody.appendChild(footerInput);
+    accordionBody.appendChild(footerInput.label);
+    accordionBody.appendChild(footerInput.input);
     accordionBody.appendChild(document.createElement('br'));
     accordionBody.appendChild(document.createElement('br'));
     accordionBody.appendChild(embedFieldsContainer);
-    accordionBody.appendChild(fieldsInput);
     accordionBody.appendChild(addFieldButton);
     accordionBody.appendChild(document.createElement('br'));
     accordionBody.appendChild(editButton);
-    
-    embedBody.appendChild(accordionBody);
-    embedForm.appendChild(messageIdInput);
-    embedForm.appendChild(embedBody);
 
-    embedDiv.appendChild(embedForm);
-
-    return embedDiv;
+    return accordionBody;
 }
 
 function getMaxHeightToChildren(element) {
