@@ -3,53 +3,23 @@ let embedCounter = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     const fieldsContainer = document.getElementById('fields-container');
-    const addFieldButton = document.getElementById('add-field');
+
+    SetColor();
+
+    setFieldButtonLogic(fieldsContainer);
+
+    setMessageFormBehaviour(fieldsContainer);
+
+    setFetchButtonLogic();    
+});
+
+function setFetchButtonLogic() {
     const fetchButton = document.getElementById('fetch-data');
     const messagesContainer = document.getElementById('messages-container');
-    const sendMessageForm = document.getElementById('sendMessage');
-    
-
-    const colorInput = document.getElementById('color');
-    const embedDiv = document.getElementById('embedDiv');
-    const initialColor = colorInput.value;
-    
-    addFieldButton.addEventListener('click', () => {
-        const newField = createField();
-
-        fieldsContainer.appendChild(newField);
-    });
-    
-    fieldsContainer.addEventListener('click', (event) => {
-        if (event.target && event.target.className === 'remove-field red-discord-button mt-1 ml-2') {
-            event.target.parentElement.parentElement.remove();
-            fieldCounter--;
-        }
-    });
-
-    sendMessageForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        const fields = [];
-
-        for (const child of fieldsContainer.children) {
-            if (child.fieldObject) {
-                fields.push({
-                    name: child.fieldObject.title ? child.fieldObject.title.value : '',
-                    value: child.fieldObject.description ? child.fieldObject.description.value : '',
-                    inline: child.fieldObject.inline ? child.fieldObject.inline.checked : true
-                });
-            }
-        }
-
-        sendMessageForm.elements.fields.value = JSON.stringify(fields);
-
-        sendMessageForm.submit();
-    });
-
     fetchButton.addEventListener('click', () => {
         fetch('/get-channel-messages')
             .then(response => response.json())
-            .then(data => {                
+            .then(data => {
                 messagesContainer.innerHTML = '';
 
                 data = data.filter(message => message.embeds.length > 0);
@@ -72,20 +42,64 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
     });
+}
 
+function setMessageFormBehaviour(fieldsContainer) {
+    const sendMessageForm = document.getElementById('sendMessage');
+    sendMessageForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const fields = [];
+
+        for (const child of fieldsContainer.children) {
+            if (child.fieldObject) {
+                fields.push({
+                    name: child.fieldObject.title ? child.fieldObject.title.value : '',
+                    value: child.fieldObject.description ? child.fieldObject.description.value : '',
+                    inline: child.fieldObject.inline ? child.fieldObject.inline.checked : true
+                });
+            }
+        }
+
+        sendMessageForm.elements.fields.value = JSON.stringify(fields);
+
+        sendMessageForm.submit();
+    });
+}
+
+function setFieldButtonLogic(fieldsContainer) {
+    const addFieldButton = document.getElementById('add-field');
+    addFieldButton.addEventListener('click', () => {
+        const newField = createField();
+
+        fieldsContainer.appendChild(newField);
+    });
+
+    fieldsContainer.addEventListener('click', (event) => {
+        if (event.target && event.target.className === 'remove-field red-discord-button mt-1 ml-2') {
+            event.target.parentElement.parentElement.remove();
+            fieldCounter--;
+        }
+    });
+}
+
+function SetColor() {
+    const colorInput = document.getElementById('color');
+    const embedDiv = document.getElementById('embedDiv');
+    const initialColor = colorInput.value;
     colorInput.style.backgroundColor = initialColor;
     embedDiv.style.borderLeftColor = initialColor;
     embedDiv.style.borderLeftStyle = 'solid';
     embedDiv.style.borderLeftWidth = '5px';
 
-    colorInput.addEventListener('input', function() {
+    colorInput.addEventListener('input', function () {
         const selectedColor = colorInput.value;
         colorInput.style.backgroundColor = selectedColor;
         embedDiv.style.borderLeftColor = selectedColor;
         embedDiv.style.borderLeftStyle = 'solid';
         embedDiv.style.borderLeftWidth = '5px';
     });
-});
+}
 
 function createField(title = '', des = '', inline = true) {
     const field = document.createElement('div');
