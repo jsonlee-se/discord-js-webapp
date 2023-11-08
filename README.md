@@ -1,4 +1,8 @@
-# Project and `config.json` setup
+# Embed webapp
+
+This project contains a simple web interface to create and send embedded messages in discord.
+
+## Project and `config.json` setup
 
 This guide will walk you through setting up a Node.js project and creating a `config.json` file to manage your project's configuration.
 
