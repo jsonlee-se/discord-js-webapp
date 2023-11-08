@@ -42,3 +42,5 @@ Add your configuration in JSON format in the root folder. For example:
   "channel_id" : "your-channel-id",
 }
 ```
+
+You can add channel id's according to the channels you want to send embedded messages in.
