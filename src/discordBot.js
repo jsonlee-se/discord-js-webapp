@@ -33,39 +33,39 @@ function convertColor(color) {
 
 function createEmbed(title, url, description, thumbnail, image, color, footer, fields) {
     const embed = new EmbedBuilder()
-        embed.setTitle(title);
+    embed.setTitle(title);
 
-        if (color !== '') {
-            embed.setColor(convertColor(color));
-        }
+    if (color !== '') {
+        embed.setColor(convertColor(color));
+    }
 
-        if (url !== '') {
-            embed.setURL(url);
-        }
-    
-        if (description !== '') {
-            embed.setDescription(description);
-        }
-    
-        if (thumbnail !== '') {
-            embed.setThumbnail(thumbnail);
-        }
-    
-        if (image !== '') {
-            embed.setImage(image);
-        }
-    
-        embed.setTimestamp();
-    
-        if (footer !== '') {
-            embed.setFooter({ text: footer, iconURL: thumbnail });
-        }
+    if (url !== '') {
+        embed.setURL(url);
+    }
 
-        
-        if (fields.length > 0) {
-            embed.addFields(fields);
-        }
-        
+    if (description !== '') {
+        embed.setDescription(description);
+    }
+
+    if (thumbnail !== '') {
+        embed.setThumbnail(thumbnail);
+    }
+
+    if (image !== '') {
+        embed.setImage(image);
+    }
+
+    embed.setTimestamp();
+
+    if (footer !== '') {
+        embed.setFooter({ text: footer, iconURL: thumbnail });
+    }
+
+
+    if (fields.length > 0) {
+        embed.addFields(fields);
+    }
+
     return embed;
 }
 
@@ -76,9 +76,9 @@ function editEmbed(content, title, url, description, thumbnail, image, color, fo
         fields = parseFields(fields);
 
         const newEmbed = createEmbed(title, url, description, thumbnail, image, color, footer, fields);
-        
+
         const message = channel.messages.fetch(messageId)
-        .then(message => message.edit({ embeds: [newEmbed] }));
+            .then(message => message.edit({ embeds: [newEmbed] }));
         console.log(`Embed edited: ${title} \n`);
     }
 }
